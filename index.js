@@ -38,7 +38,7 @@ db.sync()
  * e os respectivos controllers
  *
  * As imagens serão armazenadas em disco
- * no servidor com um uuid unico.
+ * no servidor com um uuid unico. (instalar lib)
  * No controller sera gerado um url
  * com o uuid da imagem.
  * Servir de public/images
