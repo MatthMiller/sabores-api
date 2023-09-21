@@ -9,7 +9,7 @@ const Recipe = db.define('Recipe', {
     required: true,
     allowNull: false,
   },
-  imageUUID: {
+  imageName: {
     type: DataTypes.STRING,
     required: true,
     allowNull: false,

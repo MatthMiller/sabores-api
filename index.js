@@ -18,6 +18,8 @@ const app = express();
 app.use(express.json({ limit: '8mb' }));
 
 app.use('/api-docs', serve, setup(specs));
+// images/nome-imagem.jpg
+app.use(express.static('static'));
 
 app.use('/user', userRoutes);
 app.use('/post', postRoutes);

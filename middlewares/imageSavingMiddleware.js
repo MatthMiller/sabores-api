@@ -13,7 +13,7 @@ const imageSavingMiddleware = async (req, res, next) => {
   try {
     if (!req.body.image) {
       res.status(400).message({
-        message: "Request needs an key 'image' with value in base64",
+        message: "Request needs a key 'image' with value in base64",
       });
     }
 
