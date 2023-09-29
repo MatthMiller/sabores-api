@@ -6,5 +6,6 @@ import express from 'express';
 const recipeRoutes = Router();
 
 recipeRoutes.post('/create', imageSavingMiddleware, RecipeController.create);
+recipeRoutes.get('/feed/:order?', RecipeController.feed);
 
 export default recipeRoutes;

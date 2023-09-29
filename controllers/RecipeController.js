@@ -1,4 +1,5 @@
 import Recipe from '../models/Recipe.js';
+import User from '../models/User.js';
 
 class RecipeController {
   /**
@@ -44,6 +45,72 @@ class RecipeController {
     } catch (error) {
       res.status(500).json({ message: error });
       console.log(error);
+      return;
+    }
+  }
+
+  static async customFeed(req, res) {
+    try {
+      res.json({
+        message:
+          'Custom Feed. Rota pra feed do usuário (mostra receitas dos seguidores primeiro)',
+      });
+    } catch (error) {
+      res.status(500).json({ message: error });
+      console.log(error);
+    }
+  }
+
+  static async feed(req, res) {
+    try {
+      const orderParam = req.params.order || 'recent';
+      const actualPage = parseInt(req.query.page) || 1;
+      const recipesPerPage = parseInt(req.query.recipesPerPage) || 10;
+
+      let order = '';
+      if (orderParam === 'recent') {
+        order = 'DESC';
+      } else if (orderParam === 'old') {
+        order = 'ASC';
+      } else {
+        res.status(400).json({ message: 'Invalid order filter' });
+        return;
+      }
+
+      const { count, rows } = await Recipe.findAndCountAll({
+        raw: true,
+        limit: recipesPerPage,
+        offset: (actualPage - 1) * recipesPerPage,
+        order: [['createdAt', order]],
+        include: [
+          {
+            model: User,
+            attributes: ['name'],
+          },
+        ],
+        attributes: { exclude: ['UserId'] },
+      });
+
+      const recipes = rows.map((recipe) => ({
+        id: recipe.id,
+        title: recipe.title,
+        author: recipe['User.name'],
+        videoLink: recipe.videoLink,
+        ingredients: recipe.ingredients,
+        imagePath: `http://${req.headers.host}/images/${recipe.imageName}`,
+        createdAt: recipe.createdAt,
+        updatedAt: recipe.updatedAt,
+      }));
+
+      res.json({
+        totalPages: Math.ceil(count / recipesPerPage),
+        actualPage,
+        recipes,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error });
+      console.log(error);
+      return;
     }
   }
 }

@@ -10,6 +10,7 @@ userRoutes.get('/all', UserController.getAll);
 
 export default userRoutes;
 
+// implementar getRecipes() que o express permite
+
 // Consultar todos os usuários registrados
-// Usuários com posts
 // Usuários e seus posts (título e id)

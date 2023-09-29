@@ -44,34 +44,35 @@ class UserController {
     try {
       const { email, password } = req.body;
 
-      if (email && password) {
-        const user = await User.findOne({ where: { email } });
-        if (!user) {
-          res.status(401).json({ message: 'E-mail unregistered' });
-          return;
-        }
-
-        const isCorrectPassword = await bcrypt.compare(password, user.password);
-        if (!isCorrectPassword) {
-          res.status(401).json({ message: 'Invalid credentials' });
-          return;
-        }
-
-        const token = jwt.sign(
-          { id: user.id, email: user.email },
-          process.env.JWT_SECRET,
-          {
-            expiresIn: '10h',
-          }
-        );
-
-        res.status(200).json({ token, message: 'User logged with success!' });
-      } else {
+      if (!(email && password)) {
         res.status(400).json({ message: 'E-mail and password are required' });
         return;
       }
+
+      const user = await User.findOne({ where: { email } });
+      if (!user) {
+        res.status(401).json({ message: 'E-mail unregistered' });
+        return;
+      }
+
+      const isCorrectPassword = await bcrypt.compare(password, user.password);
+      if (!isCorrectPassword) {
+        res.status(401).json({ message: 'Invalid credentials' });
+        return;
+      }
+
+      const token = jwt.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '10h',
+        }
+      );
+
+      res.status(200).json({ token, message: 'User logged with success!' });
     } catch (error) {
       res.status(500).json({ message: 'Error on login' });
+      console.log(error);
     }
   }
 
@@ -124,6 +125,8 @@ class UserController {
     try {
     } catch (error) {
       res.status(500).json({ message: 'Error registering user' });
+      console.log(error);
+      return;
     }
   }
 }
