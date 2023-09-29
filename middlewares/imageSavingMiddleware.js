@@ -15,6 +15,7 @@ const imageSavingMiddleware = async (req, res, next) => {
       res.status(400).message({
         message: "Request needs a key 'image' with value in base64",
       });
+      return;
     }
 
     const buffer = Buffer.from(req.body.image, 'base64');
@@ -22,6 +23,13 @@ const imageSavingMiddleware = async (req, res, next) => {
     const imageFilename = uuid() + '.' + extensionName.ext;
     const imagePath = path.join(__imagesdir, imageFilename);
 
+    if (!['jpg', 'jpeg', 'png', 'tiff', 'webp'].includes(extensionName.ext)) {
+      res.status(400).json({
+        message:
+          'Invalid image format. Valid extensions: .jpg, .jpeg, .png, .tiff, .webp',
+      });
+      return;
+    }
     fs.writeFileSync(imagePath, buffer);
 
     console.log(`Saved image ${imageFilename} at ${__imagesdir}`);

@@ -10,10 +10,18 @@ import Recipe from './models/Recipe.js';
 import Rating from './models/Rating.js';
 import specs from './docs/swagger.js';
 import { serve, setup } from 'swagger-ui-express';
-import { fileURLToPath } from 'url';
+import { rateLimit } from 'express-rate-limit';
 
 const app = express();
 app.use(express.json({ limit: '8mb' }));
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes,
+    limit: 100, // Limit each IP to 100 requests per `window`
+    standardHeaders: 'draft-7',
+    legacyHeaders: false,
+  })
+);
 
 app.use('/api-docs', serve, setup(specs));
 // images/nome-imagem.ext
