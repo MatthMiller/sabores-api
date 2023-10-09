@@ -2,14 +2,13 @@ import 'dotenv/config';
 import express from 'express';
 import db from './db/db.js';
 import userRoutes from './routes/userRoutes.js';
-import postRoutes from './routes/postRoutes.js';
 import recipeRoutes from './routes/recipeRoutes.js';
+import Follow from './models/Follow.js';
 import User from './models/User.js';
-import Post from './models/Post.js';
 import Recipe from './models/Recipe.js';
+import Category from './models/Category.js';
+import RecipesList from './models/RecipesList.js';
 import Rating from './models/Rating.js';
-import specs from './docs/swagger.js';
-import { serve, setup } from 'swagger-ui-express';
 import { rateLimit } from 'express-rate-limit';
 
 const app = express();
@@ -23,32 +22,20 @@ app.use(
   })
 );
 
-app.use('/api-docs', serve, setup(specs));
 // images/nome-imagem.ext
 app.use(express.static('static'));
 
 app.use('/user', userRoutes);
-// app.use('/post', postRoutes);
 app.use('/recipe', recipeRoutes);
 app.use('/', (req, res) => {
   res.status(404).json({ message: 'Status 404: Route not found' });
 });
 
+// { force: true } apaga tudo
 db.sync()
   .then(() => {
-    app.listen(3000);
+    app.listen(3030);
   })
   .catch((err) => {
     console.log(err);
   });
-
-// Anotações:
-/**
- * Apagar as outras rotas que não vai usar (post, comments)
- * e os respectivos controllers
- *
- * Documentar pelo Postman (collections)
- * na opção view documentation da request
- * tem como colocar basicamente tudo.
- * Ele gera um link da api
- */

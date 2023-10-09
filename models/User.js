@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import db from '../db/db.js';
+import Follow from './Follow.js';
 
 const User = db.define('User', {
   name: {
@@ -17,6 +18,23 @@ const User = db.define('User', {
     required: true,
     allowNull: false,
   },
+  profilePictureName: {
+    type: DataTypes.STRING,
+    required: false,
+    allowNull: true,
+  },
+});
+
+User.belongsToMany(User, {
+  as: 'followers',
+  through: Follow,
+  foreignKey: 'followingId',
+});
+
+User.belongsToMany(User, {
+  as: 'following',
+  through: Follow,
+  foreignKey: 'followerId',
 });
 
 export default User;
