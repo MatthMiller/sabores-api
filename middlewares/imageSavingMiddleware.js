@@ -12,7 +12,7 @@ const __imagesdir = path.join(__dirname, '../static/images');
 const imageSavingMiddleware = async (req, res, next) => {
   try {
     if (!req.body.image) {
-      res.status(400).message({
+      res.status(400).json({
         message: "Request needs a key 'image' with value in base64",
       });
       return;

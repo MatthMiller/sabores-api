@@ -10,11 +10,12 @@ class RecipeController {
 
   static async create(req, res) {
     try {
-      const { title, videoLink, ingredients, content } = req.body;
+      const { title, videoLink, ingredients, content, categoryId } = req.body;
 
-      if ([title, ingredients, content].includes(undefined)) {
+      if ([title, ingredients, content, categoryId].includes(undefined)) {
         res.status(400).json({
-          message: "The keys 'title', 'ingredients' and 'content' are required",
+          message:
+            "The keys 'title', 'ingredients', 'categoryId' and 'content' are required",
         });
         return;
       }
@@ -38,12 +39,13 @@ class RecipeController {
         imageName: req.uuid,
         ingredients,
         content,
+        CategoryId: categoryId,
         videoLink: videoLink === undefined ? null : videoLink,
       });
 
       res.status(200).json({ message: 'Receita criada com sucesso!' });
     } catch (error) {
-      res.status(500).json({ message: error });
+      res.status(500).json({ message: 'Erro inesperado' });
       console.log(error);
       return;
     }
@@ -56,7 +58,7 @@ class RecipeController {
           'Custom Feed. Rota pra feed do usuário (mostra receitas dos seguidores primeiro)',
       });
     } catch (error) {
-      res.status(500).json({ message: error });
+      res.status(500).json({ message: 'Erro inesperado' });
       console.log(error);
     }
   }
@@ -108,7 +110,7 @@ class RecipeController {
         recipes,
       });
     } catch (error) {
-      res.status(500).json({ message: error });
+      res.status(500).json({ message: 'Erro inesperado' });
       console.log(error);
       return;
     }
