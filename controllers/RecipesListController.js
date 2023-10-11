@@ -206,6 +206,7 @@ class RecipesListController {
             title: recipeDetails.title,
             author: recipeDetails['User.name'],
             videoLink: recipeDetails.videoLink,
+            estimatedTimeMinutes: recipeDetails.estimatedTimeMinutes,
             ingredients: recipeDetails.ingredients,
             imagePath: `http://${req.headers.host}/images/${recipeDetails.imageName}`,
             createdAt: recipeDetails.createdAt,
@@ -214,7 +215,12 @@ class RecipesListController {
         })
       );
 
-      res.status(200).json(formattedRecipes);
+      res.status(200).json({
+        title: list.title,
+        updatedAt: list.updatedAt,
+        createdAt: list.createdAt,
+        recipes: formattedRecipes,
+      });
     } catch (error) {
       res.status(500).json({ message: 'Erro inesperado' });
       console.log(error);

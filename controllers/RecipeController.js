@@ -129,6 +129,7 @@ class RecipeController {
         title: recipe.title,
         author: recipe['User.name'],
         videoLink: recipe.videoLink,
+        estimatedTimeMinutes: recipe.estimatedTimeMinutes,
         ingredients: recipe.ingredients,
         imagePath: `http://${req.headers.host}/images/${recipe.imageName}`,
         createdAt: recipe.createdAt,

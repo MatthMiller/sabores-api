@@ -36,11 +36,6 @@ const Recipe = db.define('Recipe', {
     required: true,
     allowNull: false,
   },
-  // categoryId: {
-  //   type: DataTypes.INTEGER,
-  //   required: true,
-  //   allowNull: false,
-  // },
 });
 
 Recipe.belongsTo(Category);
