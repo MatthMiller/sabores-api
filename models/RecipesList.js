@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import db from '../db/db.js';
-import Recipe from './Recipe.js';
+import User from './User.js';
 
 const RecipesList = db.define('RecipesList', {
   title: {
@@ -8,6 +8,12 @@ const RecipesList = db.define('RecipesList', {
     required: true,
     allowNull: false,
   },
+  isSeasonal: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });
+
+RecipesList.belongsTo(User);
 
 export default RecipesList;

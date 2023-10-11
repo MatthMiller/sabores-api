@@ -18,7 +18,9 @@ class CategoryController {
       }
 
       await Category.create({ title, imageName: req.uuid });
-      res.status(200).json({ message: 'Título criado com sucesso' });
+      res
+        .status(200)
+        .json({ message: `Categoria '${title}' criada com sucesso` });
     } catch (error) {
       res.status(500).json({ message: 'Erro inesperado' });
       console.log(error);

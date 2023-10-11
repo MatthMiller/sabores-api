@@ -36,6 +36,5 @@ const Recipe = db.define('Recipe', {
 Recipe.belongsTo(Category);
 Recipe.belongsTo(User);
 Recipe.hasMany(Rating);
-Recipe.belongsToMany(RecipesList, { through: 'RecipesInList' });
 
 export default Recipe;

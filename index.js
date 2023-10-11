@@ -4,13 +4,15 @@ import db from './db/db.js';
 import userRoutes from './routes/userRoutes.js';
 import recipeRoutes from './routes/recipeRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
-import Follow from './models/Follow.js';
+import Follow from './models/associative/Follow.js';
 import User from './models/User.js';
 import Recipe from './models/Recipe.js';
 import Category from './models/Category.js';
 import RecipesList from './models/RecipesList.js';
+import RecipesInList from './models/associative/RecipesInList.js';
 import Rating from './models/Rating.js';
 import { rateLimit } from 'express-rate-limit';
+import recipesListRoutes from './routes/recipesListRoutes.js';
 
 const app = express();
 // Para não dar problema de cors no desenvolvimento
@@ -37,6 +39,7 @@ app.use(express.static('static'));
 
 app.use('/users', userRoutes);
 app.use('/recipes', recipeRoutes);
+app.use('/recipes-list', recipesListRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/', (req, res) => {
   res.status(404).json({ message: 'Status 404: Route not found' });

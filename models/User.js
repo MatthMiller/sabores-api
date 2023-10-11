@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import db from '../db/db.js';
-import Follow from './Follow.js';
+import Follow from './associative/Follow.js';
 
 const User = db.define('User', {
   name: {
