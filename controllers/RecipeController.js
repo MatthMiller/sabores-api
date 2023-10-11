@@ -1,4 +1,5 @@
 import Recipe from '../models/Recipe.js';
+import Category from '../models/Category.js';
 import User from '../models/User.js';
 
 class RecipeController {
@@ -10,12 +11,27 @@ class RecipeController {
 
   static async create(req, res) {
     try {
-      const { title, videoLink, ingredients, content, categoryId } = req.body;
+      const {
+        title,
+        videoLink,
+        ingredients,
+        content,
+        categoryId,
+        estimatedTimeMinutes,
+      } = req.body;
 
-      if ([title, ingredients, content, categoryId].includes(undefined)) {
+      if (
+        [
+          title,
+          ingredients,
+          content,
+          categoryId,
+          estimatedTimeMinutes,
+        ].includes(undefined)
+      ) {
         res.status(400).json({
           message:
-            "The keys 'title', 'ingredients', 'categoryId' and 'content' are required",
+            "The keys 'title', 'ingredients', 'categoryId', 'estimatedTimeMinutes' and 'content' are required",
         });
         return;
       }
@@ -27,10 +43,24 @@ class RecipeController {
         return;
       }
 
-      if (typeof ingredients !== 'number' && ingredients % 1 !== 0) {
+      if (
+        typeof ingredients !== 'number' &&
+        ingredients % 1 !== 0 &&
+        typeof estimatedTimeMinutes !== 'number' &&
+        ingredients % 1 !== 0
+      ) {
         res.status(400).json({
-          message: "'ingredients' must be an integer",
+          message: "'ingredients' and 'estimatedTimeMinutes' must be integers",
         });
+        return;
+      }
+
+      const category = await Category.findOne({ where: { id: categoryId } });
+
+      if (!category) {
+        res
+          .status(400)
+          .json({ message: `Essa categoria não existe (id: ${categoryId})` });
         return;
       }
 
@@ -39,6 +69,7 @@ class RecipeController {
         imageName: req.uuid,
         ingredients,
         content,
+        estimatedTimeMinutes,
         CategoryId: categoryId,
         videoLink: videoLink === undefined ? null : videoLink,
       });
