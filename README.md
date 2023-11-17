@@ -64,21 +64,27 @@ Compressão de Imagens, em nova resolução.
 [Front-End WEB Sabores Compartilhados](https://github.com/MatthMiller/sabores-compartilhados)
 
 ## <a name="preRequisitos"></a> Pré-requisitos ⚠️
-?    
-Versão do Android; 
-SDK; 
-Aparelho utilizado para testes.
-- Liste todas as dependencias e libs que o usuário deve ter instalado na máquina antes de rodar a aplicação, para rodar o projeto.
+Banco de Dados MYSQL;
+
+Node;
+
+xampp;
+
+Postman; (Para interarir com a API sem o Front-End)
 
 ## <a name="comoRodar"></a> Como rodar a aplicação 
-?
+Para rodar a API, usando o xampp um banco de dados deve ser criado no phpAdmin com o nome 'sabores';
+
+No diretório onde foi baixado, deve ser rodado o comando '$ npm install';
+
+Depois disto basta enviar o comando 'npm start';
+
 
 ## <a name="testes"></a> Testes realizados
 Os testes podem ser acompanhados na tabela de [Plano de Testes](https://docs.google.com/spreadsheets/d/1fNHr9dIjl4Fs1ZOBHw_4JWKReBojYbb1/edit?usp=sharing&ouid=111839950635937215202&rtpof=true&sd=true)
 
 ## <a name="bancoDados"></a> Banco de Dados 🗂️
 O projeto utiliza banco de dados MYSQL, que é administrado por meio do Sequelize.
-Caso tenha acesso a uma base de dados, deixe a descrição do arquivo (json, csv, xml e etc). ?
 
 ## <a name="linguagens"></a>Linguagens, dependencias e libs utilizadas 📚
 ![Node.Js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
@@ -95,8 +101,6 @@ imagemin
 jsonwebtoken
 
 uuid
-
-?
 
 ## <a name="devs"></a> Desenvolvedores/Contribuintes:
 Ícaro Fontavine Boaroto
