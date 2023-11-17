@@ -37,7 +37,6 @@ class UserController {
       }
     } catch (error) {
       res.status(401).json({ message: 'Invalid or expired token' });
-      console.log(error);
       return;
     }
   }
@@ -95,7 +94,10 @@ class UserController {
 
       const token = jwt.sign(
         { id: user.id, email: user.email },
-        process.env.JWT_SECRET
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '10h',
+        }
       );
 
       res.status(200).json({ token, message: 'User logged with success!' });
@@ -112,10 +114,10 @@ class UserController {
    * Checa se já não existe um usuário cadastrado no sistema com o mesmo e-mail, retornando resposta HTTP e uma mesagem de erro em caso de já existir.
    * Verifica se a senha satisfaz os requisitos de segurança, em caso negativo retornando resposta HTTP e mesagem de erro.
    * Tendo sucesso em todas as verificações é criptografa pelo bcrypt, e o usuário é finalmente criado no banco de dados.
-   * O Retorno vem com uma resposta HTTP e uma mensagem que indicam o sucesso ao criar a conta.
+   * O Retorno vem com uma resposta HTPP e uma mensagem que indicam o sucesso ao criar a conta.
    * @param {*} req conteúdo da requisição, no caso as informações informadas para a criação da conta.
    * @param {*} res conteúdo de resposta da requisição.
-   * @returns respostas HTTP e mensagens que podem ser de erro ou de sucesso.
+   * @returns respostas HTPP e mensagens que podem ser de erro ou de sucesso.
    */
   static async register(req, res) {
     const { name, email, password } = req.body;
