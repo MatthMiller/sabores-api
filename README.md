@@ -1,5 +1,5 @@
 # Sabores Compartilhados - API
-## Versão: 2.1 ?
+## Versão: 2.1 
 ## Status do Projeto: ⚠️ Espera 
 
 ## Tópicos
@@ -22,8 +22,6 @@
 [🔹 Banco de Dados](#bancoDados)
 
 [🔹 Linguagens, dependências e libs utilizadas](#linguagens)
-
-[🔹 Recursos inseridos](#recursosInseridos) 
 
 [🔹 Desenvolvedores/Contribuintes](#devs)
 
@@ -55,8 +53,6 @@ Este repositório contém a API do Projeto "Sabores Copartilhados". O projeto é
 
 ## <a name="problemas"></a> Resolvendo Problemas
 Compressão de Imagens, em nova resolução.
-Em issues foram abertos alguns problemas gerados durante o desenvolvimento desse projeto e como foram resolvidos.
-?
 
 ## <a name="novosRecursos"></a> Novos Recursos 
 
