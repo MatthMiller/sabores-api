@@ -204,7 +204,7 @@ class RecipesListController {
           return {
             id: recipeDetails.id,
             title: recipeDetails.title,
-            author: recipeDetails['User.name'],
+            author: recipeDetails['UserId'],
             videoLink: recipeDetails.videoLink,
             estimatedTimeMinutes: recipeDetails.estimatedTimeMinutes,
             ingredients: recipeDetails.ingredients,

@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
     if (!token) {
@@ -10,7 +11,20 @@ const authMiddleware = (req, res, next) => {
       return;
     }
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    req.userData = decodedToken; // { id: x, email: x } payload
+    const user = await User.findOne({ where: { email: decodedToken.email } });
+
+    if (!user) {
+      res.status(401).json({ message: 'User not found' });
+      return;
+    }
+
+    req.userData = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      profilePictureName: user.profilePictureName,
+    };
+
     next();
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {

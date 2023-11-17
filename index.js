@@ -28,7 +28,7 @@ app.use(express.json({ limit: '8mb' }));
 app.use(
   rateLimit({
     windowMs: 5 * 60 * 1000, // 15 minutes,
-    limit: 100, // Limit each IP to 100 requests per `window`
+    limit: 200, // Limit each IP to 200 requests per `window`
     standardHeaders: 'draft-7',
     legacyHeaders: false,
   })

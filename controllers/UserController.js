@@ -22,6 +22,7 @@ class UserController {
       }
     } catch (error) {
       res.status(401).json({ message: 'Invalid or expired token' });
+      console.log(error);
       return;
     }
   }
@@ -63,10 +64,7 @@ class UserController {
 
       const token = jwt.sign(
         { id: user.id, email: user.email },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: '10h',
-        }
+        process.env.JWT_SECRET
       );
 
       res.status(200).json({ token, message: 'User logged with success!' });
@@ -128,6 +126,11 @@ class UserController {
       console.log(error);
       return;
     }
+  }
+
+  static async profile(req, res) {
+    const { name, email, profilePictureName } = req.userData;
+    res.status(200).json({ name, email, profilePictureName });
   }
 }
 
