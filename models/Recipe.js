@@ -1,9 +1,8 @@
 import { DataTypes } from 'sequelize';
 import db from '../db/db.js';
+import Category from './Category.js';
 import Rating from './Rating.js';
 import User from './User.js';
-import Category from './Category.js';
-import RecipesList from './RecipesList.js';
 
 const Recipe = db.define('Recipe', {
   title: {
