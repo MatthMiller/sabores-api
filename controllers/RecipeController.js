@@ -1,5 +1,5 @@
-import Recipe from '../models/Recipe.js';
 import Category from '../models/Category.js';
+import Recipe from '../models/Recipe.js';
 import User from '../models/User.js';
 
 class RecipeController {
@@ -75,6 +75,40 @@ class RecipeController {
       });
 
       res.status(200).json({ message: 'Receita criada com sucesso!' });
+    } catch (error) {
+      res.status(500).json({ message: 'Erro inesperado' });
+      console.log(error);
+      return;
+    }
+  }
+
+  static async show(req, res) {
+    try {
+      const recipeId = req.params.id;
+
+      const recipe = await Recipe.findByPk(recipeId, {
+        include: [
+          {
+            model: User,
+            attributes: ['name'],
+          },
+        ],
+        attributes: { exclude: ['UserId'] },
+        raw: true,
+      });
+
+      if (!recipe) {
+        res.status(404).json({ message: 'Receita não encontrada' });
+        return;
+      }
+
+      const newRecipe = {
+        ...recipe,
+        imageName: undefined,
+        imagePath: `http://${req.headers.host}/images/${recipe.imageName}`,
+      };
+
+      res.status(200).json(newRecipe);
     } catch (error) {
       res.status(500).json({ message: 'Erro inesperado' });
       console.log(error);
